@@ -11780,7 +11780,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># Import libraries necessary for this project</span>
@@ -11833,7 +11833,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># Display a description of the dataset</span>
@@ -11960,7 +11960,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># TODO: Select three indices of your choice you wish to sample from the dataset</span>
@@ -12088,11 +12088,11 @@ Sample 2: Food Store (The amount paid for fresh, milk and delicatessen is <stron
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="prompt input_prompt">In&nbsp;[72]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
 
 <span class="c"># TODO: Make a copy of the DataFrame, using the &#39;drop&#39; function to drop the given feature</span>
@@ -12101,16 +12101,20 @@ Sample 2: Food Store (The amount paid for fresh, milk and delicatessen is <stron
 <span class="n">new_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">featureSelected</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">new_label</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">featureSelected</span><span class="p">]</span>
 
+<span class="n">scoreList</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="c"># TODO: Split the data into training and testing sets using the given feature as the target</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="n">new_label</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">randomState</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="n">new_label</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">randomState</span><span class="p">)</span>
 
-<span class="c"># TODO: Create a decision tree regressor and fit it to the training set</span>
-<span class="n">regressor</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
-<span class="n">regressor</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="c"># TODO: Create a decision tree regressor and fit it to the training set</span>
+    <span class="n">regressor</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
+    <span class="n">regressor</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-<span class="c"># TODO: Report the score of the prediction using the testing set</span>
-<span class="n">score</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">),</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="k">print</span> <span class="p">(</span><span class="n">score</span><span class="p">)</span>
+    <span class="c"># TODO: Report the score of the prediction using the testing set</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">),</span> <span class="n">y_test</span><span class="p">)</span>
+    <span class="n">scoreList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+    
+<span class="k">print</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">scoreList</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12123,7 +12127,7 @@ Sample 2: Food Store (The amount paid for fresh, milk and delicatessen is <stron
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>0.115396864705
+<pre>0.624420988132
 </pre>
 </div>
 </div>
@@ -12149,7 +12153,7 @@ Sample 2: Food Store (The amount paid for fresh, milk and delicatessen is <stron
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong><br>
-I select the feature <strong>Detergents_Paper</strong> to predict. The reported prediction score is 0.115 which is positive. However, it is still far away from 1 so I think the model is not fitting the data perfectly. At that point, I think the feature is necessary for identifying customers' spending as the feature is unpredictable by the others.</p>
+I select the feature <strong>Detergents_Paper</strong> to predict. I would like to do the regression multiple times with different random states. I do it 1000 times and the reported average prediction score is 0.624 which is high and positive. At that point, I think the feature is not necessary for identifying customers' spending as the feature is predictable by the others.</p>
 
 </div>
 </div>
@@ -13776,7 +13780,7 @@ Hryx5DiO4ziO4ziOkwdvLDmO4ziO4ziO4+TBG0uO4ziO4ziO4zh58MaS4ziO4ziO4zhOHv4/kpeX
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong><br>
 I can see <strong>Grocery</strong> and <strong>Detergents_Paper</strong> do have positive correlation.</p>
-<p>This deny my suspicions that <strong>Detergents_Paper</strong> is relevant to identify a specific customer as it shows correlation with Grocery. But I think noise is playing the role in affecting the result so it is possible that the two dimensions are only seems to be correlated but actually not.</p>
+<p>This comfirm my suspicions that <strong>Detergents_Paper</strong> is not relevant to identify a specific customer as it shows correlation with <strong>Grocery</strong>.</p>
 <p>The data is positively skewed distributed. Most of the data points lie at the left hand side. At that point, the median is less than the mean of the data.</p>
 
 </div>
