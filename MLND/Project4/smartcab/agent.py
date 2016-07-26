@@ -24,8 +24,8 @@ class LearningAgent(Agent):
 
         # ================== Parameters for Q-Learning ================== #
         self.epsilon = 0.1
-        self.lr = 0.9
-        self.alpha = 0.2
+        self.alpha = 0.9
+        self.gamma = 0.2
 
         # ================== Initializing the Q-Table ================== #
         # Define the components of my state tuple (next_waypoint, light, oncoming, left, right) 
@@ -114,8 +114,8 @@ class LearningAgent(Agent):
         if self.previousState != None:
             previousStateIndex = self.getStateNumber(self.previousState)
             previousActionIndex = self.getActionNumber(self.previousAction)
-            self.Q[previousStateIndex, previousActionIndex] = (1-self.lr) * self.Q[previousStateIndex, previousActionIndex] + \
-                                                              (self.lr) * (self.previousReward + (self.alpha * np.max(self.Q[stateIndex])))
+            self.Q[previousStateIndex, previousActionIndex] = (1-self.alpha) * self.Q[previousStateIndex, previousActionIndex] + \
+                                                              (self.alpha) * (self.previousReward + (self.gamma * np.max(self.Q[stateIndex])))
 
         # Save the current state, action and reward for the next update #
         self.previousState = self.state
